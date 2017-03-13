@@ -117,8 +117,8 @@ MyGame.prototype.update = function () {
     gEngine.Physics.processCollision(this.mEnvObjs, this.mCollisionInfos);
 
     var msg = "Mass: " + this.mEnvObjs.getObjectAt(this.mCurrentObj).getMass();
-    msg += " Inertia: ";
-    msg += " Friction: " + this.mEnvObjs.getObjectAt(this.mCurrentObj).getFriction();
-    msg += " R=" + obj.getRigidBody().getBoundRadius();
+    msg += " | Inertia: ";
+    msg += " | Friction: " + this.mEnvObjs.getObjectAt(this.mCurrentObj).getFriction();
+    msg += " | Restitution: " + this.mEnvObjs.getObjectAt(this.mCurrentObj).getRestitution();
     this.mMsgTop.setText(msg);
 };
