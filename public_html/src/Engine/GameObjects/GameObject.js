@@ -30,6 +30,7 @@ GameObject.prototype.setCurrentFrontDir = function (f) { vec2.normalize(this.mCu
 GameObject.prototype.getCurrentFrontDir = function () { return this.mCurrentFrontDir; };
 
 GameObject.prototype.getMass = function() { return this.mRigidBody.getMass(); };
+GameObject.prototype.setMass = function(mass) { this.mRigidBody.setMass(mass); };
 GameObject.prototype.getFriction = function() { return this.mRigidBody.getFriction(); };
 GameObject.prototype.getRestitution = function() { return this.mRigidBody.getRestitution(); };
 

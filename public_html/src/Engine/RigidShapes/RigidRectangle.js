@@ -21,9 +21,14 @@ var RigidRectangle = function (xf, width, height) {
 };
 gEngine.Core.inheritPrototype(RigidRectangle, RigidShape);
 
-RigidRectangle.prototype.incShapeSizeBy= function (dt) {
+RigidRectangle.prototype.incShapeSizeBy = function (dt) {
     this.mHeight += dt;
     this.mWidth += dt;
+};
+
+RigidRectangle.prototype.setSize = function(width, height) {
+    this.mWidth = width;
+    this.mHeight = height;
 };
 
 

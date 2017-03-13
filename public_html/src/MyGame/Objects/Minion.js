@@ -11,20 +11,37 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function Minion(spriteTexture, atX, atY, createCircle) {
+// TODO add parameter isAnimated to select whether a SpriteAnimateRenderable or a TextureRenderable is used
+// also change update() method to check this before calling updateAnimation()
+// possibly have parameter be: 1: minion; 2: platform 3: wall
+function Minion(spriteTexture, atX, atY, createCircle, type) {
     this.kDelta = 0.3;
+    this.kType = type;
     
-    this.mMinion = new SpriteAnimateRenderable(spriteTexture);
-    this.mMinion.setColor([1, 1, 1, 0]);
-    this.mMinion.getXform().setPosition(atX, atY);
-    this.mMinion.getXform().setSize(24, 19.2);
-    this.mMinion.setSpriteSequence(512, 0,      // first element pixel position: top-left 512 is top of image, 0 is left of image
+    if(type === 1) {
+        this.mMinion = new SpriteAnimateRenderable(spriteTexture);
+        this.mMinion.setColor([1, 1, 1, 0]);
+        this.mMinion.getXform().setPosition(atX, atY);
+        this.mMinion.getXform().setSize(24, 19.2);
+        this.mMinion.setSpriteSequence(512, 0,      // first element pixel position: top-left 512 is top of image, 0 is left of image
                                     204, 164,   // widthxheight in pixels
                                     5,          // number of elements in this sequence
                                     0);         // horizontal padding in between
-    this.mMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateSwing);
-    this.mMinion.setAnimationSpeed(30);
+        this.mMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateSwing);
+        this.mMinion.setAnimationSpeed(30);
                                 // show each element for mAnimSpeed updates
+    }
+    else if (type === 2) {
+        this.mMinion = new TextureRenderable(spriteTexture);
+        this.mMinion.getXform().setPosition(atX, atY);
+        this.mMinion.getXform().setSize(30, 3.75);
+    }
+    else if (type === 3) {
+        this.mMinion = new TextureRenderable(spriteTexture);
+        this.mMinion.getXform().setPosition(atX, atY);
+        this.mMinion.getXform().setSize(3, 12);
+    }
+    
 
     GameObject.call(this, this.mMinion);
     
@@ -32,7 +49,7 @@ function Minion(spriteTexture, atX, atY, createCircle) {
     if (createCircle)
         r = new RigidCircle(this.getXform(), 8); 
     else
-        r = new RigidRectangle(this.getXform(), 20, 18);
+        r = new RigidRectangle(this.getXform(), this.getXform().getWidth(), this.getXform().getHeight());
     this.setRigidBody(r);
     this.toggleDrawRenderable();
 }
@@ -41,5 +58,7 @@ gEngine.Core.inheritPrototype(Minion, WASDObj);
 Minion.prototype.update = function (aCamera) {
     GameObject.prototype.update.call(this);
     // remember to update this.mMinion's animation
-    this.mMinion.updateAnimation();
+    if (this.kType === 1) {
+        this.mMinion.updateAnimation();
+    }
 };

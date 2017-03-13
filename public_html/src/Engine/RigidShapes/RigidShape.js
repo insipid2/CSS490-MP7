@@ -30,6 +30,10 @@ RigidShape.prototype.getMass = function() {
     return this.mMass;
 };
 
+RigidShape.prototype.setMass = function(newMass) {
+    this.mMass = newMass;
+};
+
 // increases Mass by 0.05
 RigidShape.prototype.incMass = function() {
     this.mMass += 0.05;
@@ -46,7 +50,7 @@ RigidShape.prototype.getFriction = function() {
 
 RigidShape.prototype.getRestitution = function() {
     return this.mRestitution;
-}
+};
 
 RigidShape.prototype.toggleDrawBound = function() {
     this.mDrawBounds = !this.mDrawBounds;
@@ -54,6 +58,10 @@ RigidShape.prototype.toggleDrawBound = function() {
 
 RigidShape.prototype.getCenter = function() {
     return this.mXform.getPosition();
+};
+
+RigidShape.prototype.setCenter = function(newX, newY) {
+    this.mXform.setPosition(newX, newY);
 };
 
 RigidShape.prototype.setBoundRadius = function(r) {

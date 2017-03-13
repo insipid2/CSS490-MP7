@@ -13,7 +13,9 @@
 
 function MyGame() {
     this.kMinionSprite = "assets/minion_sprite.png";
-    
+    this.kPlatform = "assets/platform.png";
+    this.kWall = "assets/wall.png";
+    this.kTarget = "assets/target.png";
     // The camera to view the scene
     this.mCamera = null;
 
@@ -23,7 +25,6 @@ function MyGame() {
     this.mEnvObjs = [];
     this.mCreatedObjects = [];
     this.mCollisionInfos = [];
-    this.mHero = null;
     
     this.mCurrentObj = 0;
 }
@@ -32,36 +33,82 @@ gEngine.Core.inheritPrototype(MyGame, Scene);
 
 MyGame.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kMinionSprite);
+    gEngine.Textures.loadTexture(this.kPlatform);
+    gEngine.Textures.loadTexture(this.kWall);
+    gEngine.Textures.loadTexture(this.kTarget);
 };
 
 MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kMinionSprite);
+    gEngine.Textures.unloadTexture(this.kPlatform);
+    gEngine.Textures.unloadTexture(this.kWall);
+    gEngine.Textures.unloadTexture(this.kTarget);
 };
 
 MyGame.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mCamera = new Camera(
-        vec2.fromValues(50, 35), // position of the camera
+        vec2.fromValues(50, 37.5), // position of the camera
         100,                     // width of camera
         [0, 0, 800, 600]         // viewport (orgX, orgY, width, height)
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
             // sets the background to gray
     
-    this.mHero = new Hero(this.kMinionSprite);
     this.mEnvObjs = new GameObjectSet();
-    this.mEnvObjs.addToSet(this.mHero);
-    var y = 10;
-    var x = 10;
-    for (var i = 1; i<=5; i++) {
-        var m = new Minion(this.kMinionSprite, x, y, ((i%2)!=0));
-        x += 20;
+    var y = 1.875;
+    var x = 15;
+    
+    for (var i = 1; i <= 4; i++) {
+        var m = new Minion(this.kPlatform, x, y, false, 2);
+        m.setMass(0);
         this.mEnvObjs.addToSet(m);
+        m = new Minion(this.kPlatform, x, y + 71, false, 2);
+        m.setMass(0);
+        this.mEnvObjs.addToSet(m);
+        x += 30;
     }
+    
+    x = 1.5;
+    y = 6;
+    
+    for (var i = 1; i <= 7; i++) {
+        var m = new Minion(this.kWall, x, y, false, 3);
+        m.setMass(0);
+        this.mEnvObjs.addToSet(m);
+        m = new Minion(this.kWall, x + 97, y, false, 3);
+        m.setMass(0);
+        this.mEnvObjs.addToSet(m);
+        y += 12;
+    }
+
+    
+    // create platforms
+//    for (var i = 1; i <= 4; i++) {
+//        // bottom row
+//        var rend = new TextureRenderable(this.kPlatform);
+//        var m = new GameObject(rend);
+//        var rigid = new RigidRectangle(rend.getXform(), 30, 3.75);
+//        m.setRigidBody(rigid);
+//        m.getRigidBody().setCenter(x, y);
+//        m.setMass(0);
+//        console.log("center: " + m.getRigidBody().getCenter());
+//        this.mEnvObjs.addToSet(m);
+//        // top row
+//        rend = new TextureRenderable(this.kPlatform);
+//        m = new GameObject(rend);
+//        rigid = new RigidRectangle(rend.getXform(), 30, 3.75);
+//        m.setRigidBody(rigid);
+//        m.getRigidBody().setCenter(x, y + 67);
+//        m.setMass(0);
+//        this.mEnvObjs.addToSet(m);
+//        x += 30;
+//    }
+    
 
     this.mMsgTop = new FontRenderable("Status Message");
     this.mMsgTop.setColor([0, 0, 0, 1]);
-    this.mMsgTop.getXform().setPosition(2, 69);
+    this.mMsgTop.getXform().setPosition(4, 67);
     this.mMsgTop.setTextHeight(2);
 };
 
@@ -75,10 +122,11 @@ MyGame.prototype.draw = function () {
     
     this.mEnvObjs.draw(this.mCamera);
     
-    // for now draw these ...
-    for (var i = 0; i<this.mCollisionInfos.length; i++) 
-        this.mCollisionInfos[i].draw(this.mCamera);
-    this.mCollisionInfos = [];
+    // don't draw anymore, should be handled by physics?
+//    // for now draw these ...
+//    for (var i = 0; i<this.mCollisionInfos.length; i++) 
+//        this.mCollisionInfos[i].draw(this.mCamera);
+//    this.mCollisionInfos = [];
     
     this.mMsgTop.draw(this.mCamera);   // only draw status in the main camera
 };
