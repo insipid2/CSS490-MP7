@@ -92,7 +92,7 @@ MyGame.prototype.increasShapeSize = function(obj, delta) {
 // anything from this function!
 MyGame.kBoundDelta = 0.1;
 MyGame.prototype.update = function () {
-    var msg = "Environment Objects: " + this.mEnvObjs.size() + " Current=" + this.mCurrentObj;   
+    
         
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Right)) {
         this.mCurrentObj = (this.mCurrentObj + 1) % 6;
@@ -116,6 +116,9 @@ MyGame.prototype.update = function () {
     
     gEngine.Physics.processCollision(this.mEnvObjs, this.mCollisionInfos);
 
+    var msg = "Mass: " + this.mEnvObjs.getObjectAt(this.mCurrentObj).getMass();
+    msg += " Inertia: ";
+    msg += " Friction: " + this.mEnvObjs.getObjectAt(this.mCurrentObj).getFriction();
     msg += " R=" + obj.getRigidBody().getBoundRadius();
     this.mMsgTop.setText(msg);
 };

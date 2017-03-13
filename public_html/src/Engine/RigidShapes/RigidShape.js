@@ -11,7 +11,6 @@ function RigidShape(xf) {
     this.mLine.setColor([1, 1, 1, 1]);
     
     this.mXform = xf;
-    this.mCenter = xf.getPosition();
     this.mVelocity = vec2.fromValues(0, 0);
     this.mAcceleration = vec2.fromValues(0, 0);
 
@@ -26,6 +25,24 @@ function RigidShape(xf) {
     this.mBoundRadius = 0;
     this.mDrawBounds = false;
 }
+
+RigidShape.prototype.getMass = function() {
+    return this.mMass;
+};
+
+// increases Mass by 0.05
+RigidShape.prototype.incMass = function() {
+    this.mMass += 0.05;
+};
+
+// decreases Mass by 0.05
+RigidShape.prototype.decMass = function() {
+    this.mMass -= 0.05;
+};
+
+RigidShape.prototype.getFriction = function() {
+    return this.mFriction;
+};
 
 RigidShape.prototype.toggleDrawBound = function() {
     this.mDrawBounds = !this.mDrawBounds;

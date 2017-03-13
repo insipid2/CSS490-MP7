@@ -29,6 +29,9 @@ GameObject.prototype.isVisible = function () { return this.mVisible; };
 GameObject.prototype.setCurrentFrontDir = function (f) { vec2.normalize(this.mCurrentFrontDir, f); };
 GameObject.prototype.getCurrentFrontDir = function () { return this.mCurrentFrontDir; };
 
+GameObject.prototype.getMass = function() { return this.mRigidBody.getMass(); };
+GameObject.prototype.getFriction = function() { return this.mRigidBody.getFriction(); };
+
 GameObject.prototype.getRenderable = function () { return this.mRenderComponent; };
 
 GameObject.prototype.setRigidBody = function (r) {
