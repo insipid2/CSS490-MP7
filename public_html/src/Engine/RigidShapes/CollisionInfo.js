@@ -72,8 +72,10 @@ CollisionInfo.prototype.getNormal = function () {
  */
 CollisionInfo.prototype.setInfo = function (d, n, s) {
     this.mDepth = d;
-    this.mNormal = n;
-    this.mStart = s;
+    this.mNormal[0] = n[0];
+    this.mNormal[1] = n[1];
+    this.mStart[0] = s[0];
+    this.mStart[1] = s[1];
     vec2.scaleAndAdd(this.mEnd, s, n, d);
 };
 

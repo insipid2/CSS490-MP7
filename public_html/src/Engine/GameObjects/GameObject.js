@@ -1,3 +1,4 @@
+
 /* File: GameObject.js 
  *
  * Abstracts a game object's behavior and apparance

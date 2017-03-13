@@ -4,15 +4,27 @@
 
 /* global gEngine */
 
+// previously accepted a tranform parameter, 
+// but moving away from using transform
 function RigidShape(xf) {
     this.mLine = new LineRenderable();
     this.mLine.setColor([1, 1, 1, 1]);
     
     this.mXform = xf;
+    this.mCenter = xf.getPosition();
     this.mVelocity = vec2.fromValues(0, 0);
+    this.mAcceleration = vec2.fromValues(0, 0);
+
+    this.mMass = 1;
+    this.mFriction = 0.8;
+    this.mRestitution = 0.2;
+
+    this.mAngle = 0;
+    this.mAngVel = 0;
+    this.mAngAcc = 0;
+
     this.mBoundRadius = 0;
-    
-    this.mDrawBounds = true;
+    this.mDrawBounds = false;
 }
 
 RigidShape.prototype.toggleDrawBound = function() {
