@@ -14,7 +14,7 @@ function RigidShape(xf) {
     this.mVelocity = vec2.fromValues(0, 0);
     this.mAcceleration = vec2.fromValues(0, 0);
 
-    this.mMass = 1;
+    this.mInvMass = 1;
     this.mFriction = 0.8;
     this.mRestitution = 0.2;
 
@@ -27,11 +27,17 @@ function RigidShape(xf) {
 }
 
 RigidShape.prototype.getMass = function() {
-    return this.mMass;
+    return 1 / this.mInvMass;
 };
 
 RigidShape.prototype.setMass = function(newMass) {
-    this.mMass = newMass;
+    this.mInvMass = newMass;
+    if (this.mInvMass !== 0) {
+        this.mInvMass = 1 / this.mInvMass;
+    }
+    else {
+        this.mAcceleration = vec2.fromValues(0, 0);
+    }
 };
 
 // increases Mass by 0.05

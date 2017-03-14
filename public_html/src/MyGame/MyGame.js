@@ -55,10 +55,12 @@ MyGame.prototype.initialize = function () {
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
             // sets the background to gray
     
+    // stores walls and platforms - not moveable
     this.mEnvObjs = new GameObjectSet();
+    
+    // create the floor/ceiling
     var y = 1.875;
     var x = 15;
-    
     for (var i = 1; i <= 4; i++) {
         var m = new Minion(this.kPlatform, x, y, false, 2);
         m.setMass(0);
@@ -69,9 +71,9 @@ MyGame.prototype.initialize = function () {
         x += 30;
     }
     
+    // create the right/left walls
     x = 1.5;
     y = 6;
-    
     for (var i = 1; i <= 7; i++) {
         var m = new Minion(this.kWall, x, y, false, 3);
         m.setMass(0);
@@ -81,6 +83,9 @@ MyGame.prototype.initialize = function () {
         this.mEnvObjs.addToSet(m);
         y += 12;
     }
+    
+    // create platforms
+    
 
     
     // create platforms
@@ -143,12 +148,16 @@ MyGame.prototype.update = function () {
     
         
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Right)) {
-        this.mCurrentObj = (this.mCurrentObj + 1) % 6;
+        this.mCurrentObj += 1;
+        if (this.mCurrentObj > this.mEnvObjs.length - 1) {
+            this.mCurrentObj = 0;
+        }
     }
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Left)) {
-        this.mCurrentObj = (this.mCurrentObj - 1);
-        if (this.mCurrentObj < 0)
-            this.mCurrentObj = 5;
+        this.mCurrentObj -= 1;
+        if (this.mCurrentObj < 0) {
+            this.mCurrentObj = this.mEnvObjs.length - 1;
+        }
     }
     // change to this.mCreatedObjects
     var obj = this.mEnvObjs.getObjectAt(this.mCurrentObj);
