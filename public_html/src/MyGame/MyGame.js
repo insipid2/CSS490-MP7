@@ -61,8 +61,9 @@ MyGame.prototype.initialize = function () {
     // create the floor/ceiling
     var y = 1.875;
     var x = 15;
+    var m = null;
     for (var i = 1; i <= 4; i++) {
-        var m = new Minion(this.kPlatform, x, y, false, 2);
+        m = new Minion(this.kPlatform, x, y, false, 2);
         m.setMass(0);
         this.mEnvObjs.addToSet(m);
         m = new Minion(this.kPlatform, x, y + 71, false, 2);
@@ -76,40 +77,29 @@ MyGame.prototype.initialize = function () {
     y = 6;
     for (var i = 1; i <= 7; i++) {
         var m = new Minion(this.kWall, x, y, false, 3);
-        m.setMass(0);
         this.mEnvObjs.addToSet(m);
         m = new Minion(this.kWall, x + 97, y, false, 3);
-        m.setMass(0);
         this.mEnvObjs.addToSet(m);
         y += 12;
     }
-    
-    // create platforms
-    
 
-    
     // create platforms
-//    for (var i = 1; i <= 4; i++) {
-//        // bottom row
-//        var rend = new TextureRenderable(this.kPlatform);
-//        var m = new GameObject(rend);
-//        var rigid = new RigidRectangle(rend.getXform(), 30, 3.75);
-//        m.setRigidBody(rigid);
-//        m.getRigidBody().setCenter(x, y);
-//        m.setMass(0);
-//        console.log("center: " + m.getRigidBody().getCenter());
-//        this.mEnvObjs.addToSet(m);
-//        // top row
-//        rend = new TextureRenderable(this.kPlatform);
-//        m = new GameObject(rend);
-//        rigid = new RigidRectangle(rend.getXform(), 30, 3.75);
-//        m.setRigidBody(rigid);
-//        m.getRigidBody().setCenter(x, y + 67);
-//        m.setMass(0);
-//        this.mEnvObjs.addToSet(m);
-//        x += 30;
-//    }
+    m = new Minion(this.kPlatform, 40, 40, false, 2);
+    m.getXform().setRotationInDegree(-30);
+    m.setSize(20, 2.5);
+    this.mEnvObjs.addToSet(m);
     
+    m = new Minion(this.kPlatform, 60, 30, false, 2);
+    m.setSize(20, 2.5);
+    this.mEnvObjs.addToSet(m);
+    
+    m = new Minion(this.kPlatform, 20, 20, false, 2);
+    m.setSize(20, 2.5);
+    this.mEnvObjs.addToSet(m);
+    
+    m = new Minion(this.kPlatform, 70, 50, false, 2);
+    m.setSize(20, 2.5);
+    this.mEnvObjs.addToSet(m);
 
     this.mMsgTop = new FontRenderable("Status Message");
     this.mMsgTop.setColor([0, 0, 0, 1]);
@@ -149,14 +139,14 @@ MyGame.prototype.update = function () {
         
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Right)) {
         this.mCurrentObj += 1;
-        if (this.mCurrentObj > this.mEnvObjs.length - 1) {
+        if (this.mCurrentObj > this.mEnvObjs.size() - 1) {
             this.mCurrentObj = 0;
         }
     }
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Left)) {
         this.mCurrentObj -= 1;
         if (this.mCurrentObj < 0) {
-            this.mCurrentObj = this.mEnvObjs.length - 1;
+            this.mCurrentObj = this.mEnvObjs.size() - 1;
         }
     }
     // change to this.mCreatedObjects

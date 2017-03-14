@@ -59,7 +59,7 @@ RigidRectangle.prototype.rotateVertices = function () {
     var center = this.mXform.getPosition();
     var r = this.mXform.getRotationInRad();
     for (var i = 0; i<4; i++) {
-        vec2.rotateWRT(this.mVertex[i], this.mVertex[i], this.mAngVel, center);
+        vec2.rotateWRT(this.mVertex[i], this.mVertex[i], r, center);
     }
     this.computeFaceNormals();
 };
@@ -88,10 +88,6 @@ RigidRectangle.prototype.drawAnEdge = function (i1, i2, aCamera) {
     this.mLine.setFirstVertex(this.mVertex[i1][0], this.mVertex[i1][1]);  
     this.mLine.setSecondVertex(this.mVertex[i2][0], this.mVertex[i2][1]); 
     this.mLine.draw(aCamera);
-//    var n = [3*this.mFaceNormal[i1][0], 3*this.mFaceNormal[i1][1]];
-//    vec2.add(n, this.mVertex[i1], n);
-//    this.mLine.setSecondVertex(n[0], n[1]); 
-//    this.mLine.draw(aCamera);
 };
 
 RigidRectangle.prototype.draw = function (aCamera) {

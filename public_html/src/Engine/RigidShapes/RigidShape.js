@@ -54,8 +54,16 @@ RigidShape.prototype.getFriction = function() {
     return this.mFriction;
 };
 
+RigidShape.prototype.setFriction = function(newFric) {
+    this.mFriction = newFric;
+};
+
 RigidShape.prototype.getRestitution = function() {
     return this.mRestitution;
+};
+
+RigidShape.prototype.setRestitution = function(newRest) {
+    this.mRestitution = newRest;
 };
 
 RigidShape.prototype.toggleDrawBound = function() {

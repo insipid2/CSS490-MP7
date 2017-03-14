@@ -52,8 +52,18 @@ function Minion(spriteTexture, atX, atY, createCircle, type) {
         r = new RigidRectangle(this.getXform(), this.getXform().getWidth(), this.getXform().getHeight());
     this.setRigidBody(r);
     this.toggleDrawRenderable();
+    
+    if (this.kType > 1) {
+        this.setMass(0);
+    }
 }
 gEngine.Core.inheritPrototype(Minion, WASDObj);
+
+Minion.prototype.setSize = function(width, height) {
+    this.getXform().setSize(width, height);
+    this.mRigidBody.setSize(width, height);
+};
+
 
 Minion.prototype.update = function (aCamera) {
     GameObject.prototype.update.call(this);
