@@ -125,10 +125,10 @@ MyGame.prototype.draw = function () {
     this.mEnvObjs.draw(this.mCamera);
 
     // don't draw anymore, should be handled by physics?
-//    // for now draw these ...
-//    for (var i = 0; i<this.mCollisionInfos.length; i++) 
-//        this.mCollisionInfos[i].draw(this.mCamera);
-//    this.mCollisionInfos = [];
+    // for now draw these ...
+    for (var i = 0; i<this.mCollisionInfos.length; i++) 
+        this.mCollisionInfos[i].draw(this.mCamera);
+    this.mCollisionInfos = [];
 
     this.mMsgTop.draw(this.mCamera);
     this.mMsgBot.draw(this.mCamera);
@@ -198,9 +198,19 @@ MyGame.prototype.update = function () {
         obj.setRestitution(obj.getRestitution() - 0.05);
     }
     
+    // rectangles
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.F)) {
         var m = new Minion(this.kMinionSprite, 50, 60, false, 1);
         m.setSize(5, 6);
+        m.setMass(1);
+        this.mEnvObjs.addToSet(m);
+    }
+    
+    // circles
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.G)) {
+        var m = new Minion(this.kMinionSprite, 50, 60, true, 1);
+        // m.setSize(5, 6);
+        m.setMass(1);
         this.mEnvObjs.addToSet(m);
     }
 

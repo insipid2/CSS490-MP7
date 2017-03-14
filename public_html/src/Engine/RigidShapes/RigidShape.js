@@ -121,6 +121,9 @@ RigidShape.prototype.travel = function(dt) {};
 
 RigidShape.prototype.update = function () {
     var dt = gEngine.GameLoop.getUpdateIntervalInSeconds();
+    var dump = vec2.fromValues(0, 0);
+    vec2.add(this.mVelocity, this.mVelocity, vec2.scale(dump, this.mAcceleration, dt));
+    
     //s += v*t 
     this.travel(dt);
 };
