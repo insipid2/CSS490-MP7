@@ -15,6 +15,7 @@ function RigidShape(xf) {
     this.mAcceleration = vec2.fromValues(0, 0);
 
     this.mInvMass = 1;
+    this.mInertia = 0;
     this.mFriction = 0.8;
     this.mRestitution = 0.2;
 
@@ -38,16 +39,19 @@ RigidShape.prototype.setMass = function(newMass) {
     else {
         this.mAcceleration = vec2.fromValues(0, 0);
     }
+    this.updateInertia();
 };
 
 // increases Mass by 0.05
 RigidShape.prototype.incMass = function() {
     this.mMass += 0.05;
+    this.updateInertia();
 };
 
 // decreases Mass by 0.05
 RigidShape.prototype.decMass = function() {
     this.mMass -= 0.05;
+    this.updateInertia();
 };
 
 RigidShape.prototype.getFriction = function() {
@@ -64,6 +68,10 @@ RigidShape.prototype.getRestitution = function() {
 
 RigidShape.prototype.setRestitution = function(newRest) {
     this.mRestitution = newRest;
+};
+
+RigidShape.prototype.getInertia = function() {
+    return this.mInertia;
 };
 
 RigidShape.prototype.toggleDrawBound = function() {

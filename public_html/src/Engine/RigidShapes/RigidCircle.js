@@ -19,6 +19,15 @@ RigidCircle.prototype.incShapeSizeBy= function (dt) {
     this.mRadius += dt;
 };
 
+RigidCircle.prototype.updateInertia = function() {
+    if (this.mInvMass === 0) {
+        this.mInertia = 0;
+    }
+    else {
+        this.mInertia = (1 / this.mInvMass) * (this.mRadius * this.mRadius) / 12;
+    }
+};
+
 RigidCircle.prototype.travel = function (dt) {
     // linear motion
     var p = this.mXform.getPosition();

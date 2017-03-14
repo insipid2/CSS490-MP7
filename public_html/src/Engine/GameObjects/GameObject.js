@@ -33,6 +33,7 @@ GameObject.prototype.getMass = function() { return this.mRigidBody.getMass(); };
 GameObject.prototype.setMass = function(mass) { this.mRigidBody.setMass(mass); };
 GameObject.prototype.getFriction = function() { return this.mRigidBody.getFriction(); };
 GameObject.prototype.getRestitution = function() { return this.mRigidBody.getRestitution(); };
+GameObject.prototype.getInertia = function() { return this.mRigidBody.getInertia(); };
 
 GameObject.prototype.getRenderable = function () { return this.mRenderComponent; };
 

@@ -26,6 +26,10 @@ RigidRectangle.prototype.incShapeSizeBy = function (dt) {
     this.mWidth += dt;
 };
 
+RigidRectangle.prototype.updateInertia = function() {
+    
+};
+
 RigidRectangle.prototype.setSize = function(width, height) {
     this.mWidth = width;
     this.mHeight = height;

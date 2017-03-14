@@ -26,9 +26,12 @@ var gEngine = gEngine || { };
  */
 gEngine.Physics = (function () {
 
-    var mSystemtAcceleration = [0, -20];        // system-wide default acceleration
+    //var mSystemtAcceleration = [0, -20];        // system-wide default acceleration
+    var mGravity = vec2.fromValues(0, -20);
+    var mAutoMovement = false;
+    var mAllowPen = false;
     
-    var getSystemtAcceleration = function() { return mSystemtAcceleration; };
+    var getSystemtAcceleration = function() { return mGravity; };
     
     var processCollision = function(set, infoSet) {
         var i = 0, j;
@@ -54,7 +57,9 @@ gEngine.Physics = (function () {
     
     var mPublic = {
         getSystemAcceleration: getSystemtAcceleration,
-        processCollision: processCollision
+        processCollision: processCollision,
+        movement: mAutoMovement,
+        penetration: mAllowPen
     };
     return mPublic;
 }());
