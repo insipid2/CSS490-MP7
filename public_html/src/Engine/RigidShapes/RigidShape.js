@@ -14,6 +14,7 @@ function RigidShape(xf) {
     this.mVelocity = vec2.fromValues(0, 0);
     this.mAcceleration = vec2.fromValues(0, 0);
 
+    this.mMass = 1;
     this.mInvMass = 1;
     this.mInertia = 0;
     this.mFriction = 0.8;
@@ -28,13 +29,17 @@ function RigidShape(xf) {
 }
 
 RigidShape.prototype.getMass = function() {
-    return 1 / this.mInvMass;
+    return this.mMass;
 };
 
 RigidShape.prototype.setMass = function(newMass) {
-    this.mInvMass = newMass;
-    if (this.mInvMass !== 0) {
-        this.mInvMass = 1 / this.mInvMass;
+    this.mMass = newMass;
+    if (this.mMass < 0) {
+        this.mMass = 0;
+    }
+    if (this.mMass !== 0) {
+        this.mInvMass = 1 / this.mMass;
+        this.mAcceleration = gEngine.Physics.getSystemAcceleration();
     }
     else {
         this.mAcceleration = vec2.fromValues(0, 0);
@@ -60,6 +65,9 @@ RigidShape.prototype.getFriction = function() {
 
 RigidShape.prototype.setFriction = function(newFric) {
     this.mFriction = newFric;
+    if (this.mFriction < 0) {
+        this.mFriction = 0;
+    }
 };
 
 RigidShape.prototype.getRestitution = function() {
@@ -68,6 +76,12 @@ RigidShape.prototype.getRestitution = function() {
 
 RigidShape.prototype.setRestitution = function(newRest) {
     this.mRestitution = newRest;
+    if (this.mRestitution < 0) {
+        this.mRestitution = 0;
+    }
+    if (this.mRestitution > 1) {
+        this.mRestitution = 1;
+    }
 };
 
 RigidShape.prototype.getInertia = function() {

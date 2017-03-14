@@ -32,7 +32,9 @@ GameObject.prototype.getCurrentFrontDir = function () { return this.mCurrentFron
 GameObject.prototype.getMass = function() { return this.mRigidBody.getMass(); };
 GameObject.prototype.setMass = function(mass) { this.mRigidBody.setMass(mass); };
 GameObject.prototype.getFriction = function() { return this.mRigidBody.getFriction(); };
+GameObject.prototype.setFriction = function(newFric) {this.mRigidBody.setFriction(newFric); };
 GameObject.prototype.getRestitution = function() { return this.mRigidBody.getRestitution(); };
+GameObject.prototype.setRestitution = function(newRest) { this.mRigidBody.setRestitution(newRest); };
 GameObject.prototype.getInertia = function() { return this.mRigidBody.getInertia(); };
 
 GameObject.prototype.getRenderable = function () { return this.mRenderComponent; };
